@@ -53,7 +53,7 @@ router.post("/user/login", async (req, res) => {
     const newHash = SHA256(req.body.password + userFound.salt).toString(
       encBase64
     );
-    if (!newHash === userFound.hash) {
+    if (newHash !== userFound.hash) {
       return res.status(401).json("Unauthorized");
     }
     const responseObject = {

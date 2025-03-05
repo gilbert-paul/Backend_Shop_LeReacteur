@@ -16,7 +16,7 @@ router.post("/create-db", async (req, res) => {
 router.get("/products", async (req, res) => {
   try {
     const products = await Product.find({
-      title: new RegExp(req.query.search || ""),
+      title: new RegExp(req.query.search || "","i"),
     });
     res.json(products);
   } catch (error) {

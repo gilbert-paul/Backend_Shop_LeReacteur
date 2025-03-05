@@ -25,8 +25,6 @@ router.put(
   isAuthenticated,
   isAdmin,
   async (req, res) => {
-    console.log("route mark");
-
     try {
       await Order.findByIdAndUpdate(req.params.id, { delivered: true });
       res.json({ message: "Updated" });
@@ -38,9 +36,7 @@ router.put(
 
 router.get("/orders", isAuthenticated, isAdmin, async (req, res) => {
   try {
-    console.log("orders");
-
-    const orders = await Order.find().populate("owner");
+    const orders = await Order.find().populate("owner").populate({path:'products',populate:{path:'product'}})
     res.json(orders);
   } catch (error) {
     res.status(500).json({ message: error.message });
